@@ -68,7 +68,7 @@ for sensor_path in /sys/bus/w1/devices/28-* ; do
   echo "V: $sensor_temp"
   mqtt_topic="sensors/onewire/$sensor_name"
   ts=$(date +"%Y-%m-%d_%H-%M")
-
-  eval "mosquitto_pub -h $MQ_HOST -u $MQ_USER -P $MQ_PWD -i raspi-1b-1 -t $mqtt_topic -m '{\"temperature\":$sensor_temp, \"timestamp\":\"$ts\"}'"
+  sending_host=$(hostname)
+  eval "mosquitto_pub -h $MQ_HOST -u $MQ_USER -P $MQ_PWD -i raspi-1b-1 -t $mqtt_topic -m '{\"temperature\":$sensor_temp, \"timestamp\":\"$ts\", \"publisher\":\"$sending_host\"}'"
 
 done
