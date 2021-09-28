@@ -1,0 +1,80 @@
+switch.r1:
+  friendly_name: R1 - Küche
+switch.r2:
+  friendly_name: R2 - Wohnzimmer
+switch.r3:
+  friendly_name: R3 - Schlafzimmer
+switch.r4:
+  friendly_name: R4 - Bad
+switch.r5:
+  friendly_name: R5 - Ankleide
+switch.relais_pumpe:
+  friendly_name: R6 - Pumpe
+switch.neq1736133:
+  friendly_name: Lüftung
+  icon: mdi:fan
+switch.ccu_badlueftungsautomatik:
+  friendly_name: Lüftungsautomatik
+binary_sensor.neq0094324_state:
+  friendly_name: Badezimmer Links
+  icon: mdi:window-open
+binary_sensor.neq0094537_state:
+  friendly_name: Badezimmer rechts
+  icon: mdi:window-open
+binary_sensor.neq0094297_state:
+  friendly_name: Bad unten
+  icon: mdi:window-open
+binary_sensor.neq0094247_state:
+  friendly_name: Büro links
+  icon: mdi:window-open
+binary_sensor.neq0094294_state:
+  friendly_name: Büro rechts
+  icon: mdi:window-open
+binary_sensor.neq0094333_state:
+  friendly_name: Esszimmer Tür
+  icon: mdi:window-open
+binary_sensor.neq0094242_state:
+  friendly_name: Gäste-WC
+  icon: mdi:window-open
+binary_sensor.neq0094227_state:
+  friendly_name: Haustür oben
+  icon: mdi:window-open
+binary_sensor.neq0094500_state:
+  friendly_name: Haustür unten
+  icon: mdi:window-open
+binary_sensor.neq0094260_state:
+  icon: mdi:window-open
+  friendly_name: Keller
+binary_sensor.neq0094517_state:
+  friendly_name: Küche Fenster
+  icon: mdi:window-open
+binary_sensor.neq0094325_state:
+  friendly_name: Küche Tür
+  icon: mdi:window-open
+binary_sensor.neq0094514_state:
+  friendly_name: LR Flügel links
+  icon: mdi:window-open
+binary_sensor.neq0094253_state:
+  friendly_name: LR Flügel rechts
+  icon: mdi:window-open
+binary_sensor.neq0215455_state:
+  friendly_name: Schlafzimmer links
+  icon: mdi:window-open
+binary_sensor.neq0215431_state:
+  friendly_name: Schlafzimmer Rechts
+  icon: mdi:window-open
+binary_sensor.neq0094357_state:
+  friendly_name: Schlafzimmer unten links
+  icon: mdi:window-open
+binary_sensor.neq0094258_state:
+  friendly_name: Schlafzimmer unten rechts
+  icon: mdi:window-open
+binary_sensor.neq0094310_state:
+  friendly_name: Waschküche
+  icon: mdi:window-open
+climate.neq0877778:
+  friendly_name: Ventilthermostat
+climate.oeq0298618:
+  friendly_name: Wandthermostat
+sensor.oeq0298618_humidity:
+  friendly_name: Luftfeuchte

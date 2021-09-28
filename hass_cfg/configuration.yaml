@@ -1,0 +1,152 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+homeassistant:
+  customize: !include customize.yaml
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+homematic:
+  interfaces:
+    wireless:
+      host: !secret ccu_host
+      username: !secret ccu_user
+      password: !secret ccu_pwd
+    ip:
+      host: !secret ccu_host
+      port: 2010
+  hosts:
+    ccu2:
+      host: !secret ccu_host
+      username: !secret ccu_user
+      password: !secret ccu_pwd
+mqtt:
+  broker: !secret mqtt_host 
+  username: !secret mqtt_user
+  password: !secret mqtt_pwd
+
+sensor:
+- platform: mqtt
+  state_topic: "sensors/onewire/28-00000595f59e"
+  value_template: "{{ value_json.temperature }}"
+  name: Wohnzimmer
+  unit_of_measurement: '°C'
+- platform: mqtt
+  state_topic: "sensors/onewire/28-00000595d2f7"
+  value_template: "{{ value_json.temperature }}"
+  name: Aussen
+  unit_of_measurement: '°C'
+- platform: mqtt
+  state_topic: "sensors/onewire/28-000005957862"
+  value_template: "{{ value_json.temperature }}"
+  name: Umkleide
+  unit_of_measurement: '°C'
+- platform: mqtt
+  state_topic: "sensors/onewire/28-00000595cf19"
+  value_template: "{{ value_json.temperature }}"
+  name: Schlafzimmer
+  unit_of_measurement: '°C'
+- platform: mqtt
+  state_topic: "sensors/onewire/28-0000059615e7"
+  value_template: "{{ value_json.temperature }}"
+  name: Bad
+  unit_of_measurement: '°C'
+- platform: mqtt
+  state_topic: "sensors/onewire/28-00000867ec82"
+  value_template: "{{ value_json.temperature }}"
+  name: Küche
+  unit_of_measurement: '°C'
+- platform: dnsip
+  hostname: homeee.schnorbus.net
+
+binary_sensor:
+- platform: template
+  sensors:
+    ccu_badlueftungautomatik:
+      value_template: '{{ states.homematic.ccu2.attributes.BadLuefterAutomatik }}'
+      friendly_name: 'Lüftungsautomatik'
+
+input_number:
+  slider_wohnzimmer:
+    name: Wohnzimmer
+    initial: 18
+    min: 16
+    max: 24
+    step: 0.5
+  slider_bad:
+    name: Bad
+    initial: 18
+    min: 16
+    max: 24
+    step: 0.5
+  slider_kueche:
+    name: Küche
+    initial: 18
+    min: 16
+    max: 24
+    step: 0.5
+  slider_ankleide:
+    name: Ankleide
+    initial: 18
+    min: 16
+    max: 24
+    step: 0.5
+  slider_schlafzimmer:
+    name: Schlafzimmer
+    initial: 17
+    min: 8
+    max: 19
+    step: 0.5
+
+switch:
+  - platform: rpi_gpio
+    ports:
+      17: r1
+      18: r2
+      27: r3
+      22: r4
+      24: r5
+      25: relais_pumpe
+
+  - platform: template
+    switches:
+      ccu_badlueftungsautomatik:
+        value_template: '{{ is_state("binary_sensor.ccu_badlueftungautomatik","on") }}'
+        turn_on:
+          service: homematic.set_var_value
+          data:
+            entity_id: homematic.ccu2
+            name: BadLuefterAutomatik
+            value: true
+        turn_off:
+          service: homematic.set_var_value
+          data:
+            entity_id: homematic.ccu2
+            name: BadLuefterAutomatik
+            value: false
+
+influxdb:
+  host: !secret influx_host
+  username: !secret influx_user
+  password: !secret influx_pwd
+  max_retries: 3
+  database: zhome_assistant
+  override_measurement: state
+  include:
+    domains:
+      - switch
+      - sensor
+      - binary_sensor
+      - input_number
+
+
